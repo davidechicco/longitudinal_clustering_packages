@@ -1,7 +1,7 @@
 setwd(".")
 options(stringsAsFactors = FALSE)
 cat("\014")
-set.seed(12)
+set.seed(18)
 
 list.of.packages <- c("easypackages", "NormPsy", "lcmm", "dplyr")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
@@ -97,4 +97,5 @@ predIC0 <- predictY(model1class, data_pred0, var.time = "age",draws=TRUE)
 predIC1 <- predictY(model1class, data_pred1, var.time = "age",draws=TRUE)
 plot(predIC0, col=c("deeppink","deepskyblue"), lty=1, lwd=2, ylab="normMMSE", main="Predicted trajectories for normMMSE", ylim=c(0,100), shades=TRUE)
 plot(predIC1, col=c("deeppink","deepskyblue"), lty=2, lwd=2, ylab="normMMSE", main="Predicted trajectories for normMMSE", legend=NULL, ylim=c(0,100), shades=TRUE, add=TRUE)
+grid()
 
