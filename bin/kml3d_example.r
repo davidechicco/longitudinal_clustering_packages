@@ -8,12 +8,16 @@ libraries("lcmm", "mixAK", "traj", "kml3d", "dplyr", "reshape2")
 
 paquid %>% head()
 
+paquid_ID_MMSE <- paquid %>% select("ID", "MMSE")
+
 paquid_ID_MMSE$assessment_number <- ave(paquid$"age", paquid$"ID", FUN=seq_along) 
 
 paquid_table_by_patient_original <- reshape(paquid_ID_MMSE, idvar = "ID", timevar = "assessment_number", direction = "wide")
 
 paquid_table_by_patient <- paquid_table_by_patient_original %>% na.omit()
-paquid_table_by_patient <- paquid_table_by_patient[c(1:40),]
+
+PATIENT_LIMIT <- 40
+paquid_table_by_patient <- paquid_table_by_patient[c(1:PATIENT_LIMIT),]
 
 example_kml <- NULL
 init <- (paquid_table_by_patient %>% nrow()) / 4
