@@ -3,8 +3,13 @@ options(stringsAsFactors = FALSE)
 cat("\014")
 set.seed(18)
 
-library("easypackages")
-libraries("lcmm", "mixAK", "traj", "kml3d", "dplyr", "reshape2")
+list.of.packages <- c("pacman")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages, repos='http://cran.us.r-project.org')
+
+library("pacman")
+pacman::p_load("lcmm", "mixAK", "traj", "kml3d", "dplyr", "reshape2")
+
 
 paquid %>% head()
 
@@ -30,7 +35,7 @@ this_datatable$"time" <- paquid_table_by_time
 
 s1 <- step1measures(this_datatable$"data", this_datatable$"time", ID = TRUE)
 s2 <- step2factors(s1)
-s3 <- step3clusters(s2, nclusters = 3)
+s3 <- step3clusters(s2, nclusters = 2)
 
 
 plot(s3)

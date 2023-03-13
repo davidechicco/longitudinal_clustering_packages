@@ -3,8 +3,12 @@ options(stringsAsFactors = FALSE)
 cat("\014")
 set.seed(18)
 
-library("easypackages")
-libraries("lcmm", "mixAK", "traj", "kml3d", "dplyr")
+list.of.packages <- c("pacman")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages, repos='http://cran.us.r-project.org')
+
+library("pacman")
+pacman::p_load("lcmm", "mixAK", "traj", "kml3d", "dplyr")
 
 # PBC910 dataset #
 # 
@@ -50,7 +54,7 @@ libraries("lcmm", "mixAK", "traj", "kml3d", "dplyr")
 # 
 # # paquid dataset #
 # 
-# ip_paquid <- getProfiles(t = "age", y = c("MMSE", "BVRT", "IST",  "CEP"), id = "ID", data = paquid)
+ip_paquid <- getProfiles(t = "age", y = c("MMSE", "BVRT", "IST",  "CEP"), id = "ID", data = paquid)
 # 
 # # dataset load
 # # https://cran.r-project.org/web/packages/lcmm/vignettes/pre_normalizing.html
@@ -63,7 +67,7 @@ mod_paquid <- GLMM_MCMC(y = paquid[, c("MMSE", "BVRT", "CEP")],
                                             x = list(MMSE = "empty", BVRT = "empty",  CEP = paquid[, "age"]), 
                                             z = list(MMSE = paquid[, "age"], BVRT = paquid[, "age"], CEP = "empty"), 
                                             random.intercept = rep(TRUE, 3), 
-                                            prior.b = list(Kmax = 3), 
+                                            prior.b = list(Kmax = 2), 
                                             nMCMC = c(burn = 100, 
                                             keep = 1000, 
                                             thin = 10, 
@@ -80,7 +84,7 @@ fit_paquid <- fitted(mod_paquid[[1]], x = list("empty", "empty", tpred), z = lis
 names(fit_paquid) <- c("MMSE", "BVRT", "CEP")
 
 K <- mod_paquid[[1]]$prior.b$Kmax
-clCOL <- c("darkgreen", "red3")
+clCOL <- c("darkgreen", "red3", "blue")
 plotProfiles(ip = ip_paquid, 
                          data = paquid, 
                          var = "MMSE", 

@@ -3,12 +3,12 @@ options(stringsAsFactors = FALSE)
 cat("\014")
 set.seed(18)
 
-list.of.packages <- c("easypackages", "NormPsy", "lcmm", "dplyr")
+list.of.packages <- c("pacman")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages, repos='http://cran.us.r-project.org')
 
-library("easypackages")
-libraries(list.of.packages)
+library("pacman")
+pacman::p_load("NormPsy", "lcmm", "dplyr")
 
 # dataset load
 # https://cran.r-project.org/web/packages/lcmm/vignettes/pre_normalizing.html
@@ -25,16 +25,16 @@ paquid %>% head()
 # Explanation of the parameters of the hlme() function
 # https://cran.r-project.org/web/packages/lcmm/lcmm.pdf
 
-# # estimation of the model for 2 latent classes
-# model2classes <- hlme(
-#     fixed = normMMSE ~ age65 + I(age65^2) + CEP,  # two-sided linear formula object for the fixed-effects in the linear mixed model.
-#     mixture =~ age65 + I(age65^2), # one-sided formula object for the fixed effects in the linear mixed model (only for a number of latent classes greater than 1). 
-#     random =~ age65 + I(age65^2), # optional one-sided formula for the random-effects in the linear mixed model.
-#     subject = 'ID', # name of the covariate representing the grouping structure specified with ”
-#     data = paquid, # optional data frame containing the variables named in fixed, mixture, random, classmb and subject
-#     ng = 2, # optional number of latent classes considered. If ng=1 (by default) no mixture nor classmb should be specified. If ng>1, mixture is required.
-#     B = c(0, 60, 40, 0, -4, 0, -10, 10, 212.869397, -216.421323,456.229910, 55.713775, -145.715516, 59.351000, 10.072221) # optional specification for the initial values for the parameters.
-# )
+# estimation of the model for 2 latent classes
+model2classes <- hlme(
+    fixed = normMMSE ~ age65 + I(age65^2) + CEP,  # two-sided linear formula object for the fixed-effects in the linear mixed model.
+    mixture =~ age65 + I(age65^2), # one-sided formula object for the fixed effects in the linear mixed model (only for a number of latent classes greater than 1). 
+    random =~ age65 + I(age65^2), # optional one-sided formula for the random-effects in the linear mixed model.
+    subject = 'ID', # name of the covariate representing the grouping structure specified with ”
+    data = paquid, # optional data frame containing the variables named in fixed, mixture, random, classmb and subject
+    ng = 2, # optional number of latent classes considered. If ng=1 (by default) no mixture nor classmb should be specified. If ng>1, mixture is required.
+    B = c(0, 60, 40, 0, -4, 0, -10, 10, 212.869397, -216.421323,456.229910, 55.713775, -145.715516, 59.351000, 10.072221) # optional specification for the initial values for the parameters.
+)
 
 # estimation of the model for 1 latent classes
 model1class <- hlme(
@@ -77,8 +77,8 @@ data_pred1$"age65" <- (data_pred1$age - 65)/10
 # 6 68.06122   1 0.30612245
 
 
-pred0 <- predictY(model1class, data_pred0, var.time = "age")
-pred1 <- predictY(model1class, data_pred1, var.time = "age")
+pred0 <- predictY(model2classes, data_pred0, var.time = "age")
+pred1 <- predictY(model2classes, data_pred1, var.time = "age")
 
 # predictY: 
 # Predictions (marginal and possibly subject-specific in some cases) of a hlme, lcmm, multlcmm or Jointlcmm object in the natural scale of the longitudinal outcome(s) computed from a profile of covariates (marginal) or individual data (subject specific in case of hlme).
@@ -93,9 +93,9 @@ plot(pred1, col=c("red","navy"), lty=2,lwd=3,legend=NULL,add=TRUE)
 legend(x="topright",legend=c("class1:","CEP-","CEP+"), col=rep("red",3), lwd=2, lty=c(0,1,2,0,1,2), ncol=2, bty="n", cex = 0.7)
 grid()
 
-predIC0 <- predictY(model1class, data_pred0, var.time = "age",draws=TRUE)
-predIC1 <- predictY(model1class, data_pred1, var.time = "age",draws=TRUE)
-plot(predIC0, col=c("deeppink","deepskyblue"), lty=1, lwd=2, ylab="normMMSE", main="Predicted trajectories for normMMSE", ylim=c(0,100), shades=TRUE)
-plot(predIC1, col=c("deeppink","deepskyblue"), lty=2, lwd=2, ylab="normMMSE", main="Predicted trajectories for normMMSE", legend=NULL, ylim=c(0,100), shades=TRUE, add=TRUE)
-grid()
+# predIC0 <- predictY(model2classes, data_pred0, var.time = "age",draws=TRUE)
+# predIC1 <- predictY(model2classes, data_pred1, var.time = "age",draws=TRUE)
+# plot(predIC0, col=c("deeppink","deepskyblue"), lty=1, lwd=2, ylab="normMMSE", main="Predicted trajectories for normMMSE", ylim=c(0,100), shades=TRUE)
+# plot(predIC1, col=c("deeppink","deepskyblue"), lty=2, lwd=2, ylab="normMMSE", main="Predicted trajectories for normMMSE", legend=NULL, ylim=c(0,100), shades=TRUE, add=TRUE)
+# grid()
 

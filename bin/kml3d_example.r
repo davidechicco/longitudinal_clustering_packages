@@ -3,8 +3,13 @@ options(stringsAsFactors = FALSE)
 cat("\014")
 set.seed(18)
 
-library("easypackages")
-libraries("lcmm", "mixAK", "traj", "kml3d", "dplyr", "reshape2")
+list.of.packages <- c("pacman")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages, repos='http://cran.us.r-project.org')
+
+library("pacman")
+pacman::p_load("lcmm", "mixAK", "traj", "kml3d", "dplyr", "reshape2")
+
 
 paquid %>% head()
 
@@ -44,4 +49,4 @@ example_kml@maxNA <-  0
 time_list <- paste0("t", c(1:NUM_ASSESSMENTS))
 colnames(example_kml@traj) <- time_list
 
-kml(example_kml, nbClusters=3, nbRedrawing=2, toPlot="traj")
+kml(example_kml, nbClusters=2, nbRedrawing=2, toPlot="traj")
