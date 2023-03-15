@@ -1,4 +1,4 @@
-# Pan-cancer signature on gene expression data
+# Longitudinal clustering and mixed models R packages
 
 ## Requirements
 To run the scripts of this repository, the user needs to have installed:
