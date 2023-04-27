@@ -1,4 +1,4 @@
-# Longitudinal clustering and mixed models R packages
+# Longitudinal clustering R packages
 
 ## Requirements
 To run the scripts of this repository, the user needs to have installed:
