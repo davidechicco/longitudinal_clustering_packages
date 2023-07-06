@@ -25,4 +25,4 @@ More information about this study will be avaiable in the following article:
 
 
 ## Contacts
-These software scripts were developed by Davide Chicco. Questions should be addressed to davidechicco(AT)davidechicco.it
+These software scripts were developed by [Davide Chicco](https://www.DavideChicco.it). Questions should be addressed to davidechicco(AT)davidechicco.it
