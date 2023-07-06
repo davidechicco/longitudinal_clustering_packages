@@ -18,6 +18,12 @@ The scripts can be executed this way:
 
 `Rscript traj_example.r`
 
+## Article
+More information about this study can be found in the following article:
+
+> Davide Chicco, Chen Chen, Kuan Liu, Zihang Lu, and Geoffrey M. Anderson, "A comparative review of the current R software packages for longitudinal clustering of
+multiple features for defining disease trajectories",  pages 1-13, 2023; under review.
+
 
 ## Contacts
-These software scripts were developed by Davide Chicco. Questions should be addressed to davide.chicco(AT)utoronto.ca
+These software scripts were developed by Davide Chicco. Questions should be addressed to davidechicco(AT)davidechicco.it

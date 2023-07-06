@@ -33,7 +33,8 @@ this_datatable <- c()
 this_datatable$"data" <- paquid_table_by_patient
 this_datatable$"time" <- paquid_table_by_time
 
-s1 <- step1measures(this_datatable$"data", this_datatable$"time", ID = TRUE)
+# s1 <- step1measures(this_datatable$"data", this_datatable$"time", ID = TRUE)
+s1 <- step1measures(this_datatable$"data",  ID = TRUE, verbose = TRUE)
 s2 <- step2factors(s1)
 s3 <- step3clusters(s2, nclusters = 2)
 
