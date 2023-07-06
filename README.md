@@ -19,10 +19,9 @@ The scripts can be executed this way:
 `Rscript traj_example.r`
 
 ## Article
-More information about this study can be found in the following article:
+More information about this study will be avaiable in the following article:
 
-> Davide Chicco, Chen Chen, Kuan Liu, Zihang Lu, and Geoffrey M. Anderson, "A comparative review of the current R software packages for longitudinal clustering of
-multiple features for defining disease trajectories",  pages 1-13, 2023; under review.
+> Davide Chicco, Chen Chen, Kuan Liu, Zihang Lu, and Geoffrey M. Anderson, *"A comparative review of the current R software packages for longitudinal clustering of multiple features for defining disease trajectories"*,  pages 1-13, 2023; under review.
 
 
 ## Contacts
